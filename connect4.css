@@ -1,23 +1,53 @@
-/* game board table */
+* {
+	margin: 0;
+}
+body {
+	background-color: #050000;
+	background-image: url("https://www.transparenttextures.com/patterns/broken-noise.png");
+	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
 
+/* game container => used for spacing */
+#container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+h1 {
+	font-family: "Fascinate", cursive;
+	margin-bottom: 2vh;
+	font-size: 3rem;
+	color: white;
+}
+
+#start-button {
+	font-family: "Open Sans", sans-serif;
+	margin-top: 2vh;
+	padding: 0.5vh 1.5vw 0.5vh 1.5vw;
+	font-size: 1.2rem;
+	border-radius: 5%;
+}
+
+/* game board table */
 #board td {
-	width: 50px;
-	height: 50px;
-	border: solid 1px #666;
+	width: 60px;
+	height: 60px;
+	border: solid 1px whitesmoke;
 }
 
 /* pieces are div within game table cells: draw as colored circles */
-
 .piece {
-	/* TODO: make into circles */
 	margin: 5px;
 	width: 80%;
 	height: 80%;
 	border-radius: 100%;
 }
 
-/* make pieces red/blue,  depending on player 1/2 piece */
-
+/* make pieces green/orange,  depending on player 1/2 piece */
 .player-1 {
 	background-color: blue;
 }
@@ -27,7 +57,6 @@
 }
 
 /* column-top is table row of clickable areas for each column */
-
 #column-top td {
 	border: dashed 1px lightgray;
 }
