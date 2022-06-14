@@ -43,12 +43,84 @@ h1 {
 
 /* pieces are div within game table cells: draw as colored circles */
 .piece {
-	margin: 5px;
-	width: 80%;
-	height: 80%;
+	/* size */
+	width: 52px;
+	height: 52px;
+	/* center */
+	position: absolute;
+	margin-left: 4px;
+	transform: translateY(-26px);
+	/* shape */
 	border-radius: 100%;
 }
 
+/* Animate pieces falling down according to row */
+#board tr:nth-child(2) .piece {
+	animation: slide-down-0 0.17s;
+}
+#board tr:nth-child(3) .piece {
+	animation: slide-down-1 0.33s;
+}
+#board tr:nth-child(4) .piece {
+	animation: slide-down-2 0.5s;
+}
+#board tr:nth-child(5) .piece {
+	animation: slide-down-3 0.66s;
+}
+#board tr:nth-child(6) .piece {
+	animation: slide-down-4 0.83s;
+}
+#board tr:nth-child(7) .piece {
+	animation: slide-down-5 1s;
+}
+@keyframes slide-down-0 {
+	from {
+		transform: translateY(-92px);
+	}
+	to {
+		transform: translateY(-26px);
+	}
+}
+@keyframes slide-down-1 {
+	from {
+		transform: translateY(-158px);
+	}
+	to {
+		transform: translateY(-26px);
+	}
+}
+@keyframes slide-down-2 {
+	from {
+		transform: translateY(-224px);
+	}
+	to {
+		transform: translateY(-26px);
+	}
+}
+@keyframes slide-down-3 {
+	from {
+		transform: translateY(-290px);
+	}
+	to {
+		transform: translateY(-26px);
+	}
+}
+@keyframes slide-down-4 {
+	from {
+		transform: translateY(-356px);
+	}
+	to {
+		transform: translateY(-26px);
+	}
+}
+@keyframes slide-down-5 {
+	from {
+		transform: translateY(-422px);
+	}
+	to {
+		transform: translateY(-26px);
+	}
+}
 /* make pieces #96C0CE/#C25B56,  depending on player 1/2 piece */
 .player-1 {
 	background-color: #96c0ce;
