@@ -6,7 +6,7 @@
  */
 
 const WIDTH = 7;
-const HEIGHT = 1;
+const HEIGHT = 6;
 
 let currPlayer = 1; // active player: 1 or 2
 const board = []; // array of rows, each row is array of cells  (board[y][x])
@@ -24,6 +24,8 @@ const makeBoard = () => {
 		}
 	}
 };
+
+const resetBoard = () => board.fill(null);
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
 function makeHtmlBoard() {
@@ -56,11 +58,20 @@ function makeHtmlBoard() {
 	}
 }
 
-/** findSpotForCol: given column x, return top empty y (null if filled) */
+function deleteHtmlBoard() {
+	const allTrs = document.querySelectorAll("#board tr");
+	console.log(allTrs);
+	for (const tr of allTrs) tr.remove();
+}
 
+/** findSpotForCol: given column x, return top empty y (null if filled) */
 function findSpotForCol(x) {
-	// TODO: write the real version of this, rather than always returning 0
-	return 0;
+	for (let y = HEIGHT - 1; y >= 0; y--) {
+		if (!board[y][x]) {
+			return y;
+		}
+	}
+	return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -75,9 +86,13 @@ function placeInTable(y, x) {
 }
 
 /** endGame: announce game end */
-
 function endGame(msg) {
-	// TODO: pop up alert message
+	// Slight delay so that the last piece gets played visually
+	setTimeout(() => {
+		if (window.confirm(msg)) {
+			startGame();
+		}
+	}, 10);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -96,13 +111,12 @@ function handleClick(evt) {
 
 	// check for win
 	if (checkForWin()) {
-		return endGame(`Player ${currPlayer} won!`);
+		return endGame(`Player ${currPlayer} won! Would you like to play again?`);
 	}
 
 	// check for tie
-	const isNotNull = (val) => val !== null;
-	if (board.every(isNotNull)) {
-		endGame();
+	if (board.every((val) => val < 1)) {
+		return endGame(`It's a tie! Would you like to play again?`);
 	}
 
 	// switch players
@@ -164,5 +178,21 @@ function checkForWin() {
 	}
 }
 
-makeBoard();
-makeHtmlBoard();
+function makeStartButton() {
+	const container = document.getElementById("container");
+	const startButton = document.createElement("button");
+	startButton.setAttribute("id", "start-button");
+	startButton.innerText = "Start Game";
+	startButton.addEventListener("click", startGame);
+	container.append(startButton);
+}
+
+function startGame(event) {
+	const startButton = document.getElementById("start-button");
+	deleteHtmlBoard();
+	makeBoard();
+	makeHtmlBoard();
+	startButton.innerText = "Restart";
+}
+
+makeStartButton();
