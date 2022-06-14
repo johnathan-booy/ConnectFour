@@ -20,7 +20,7 @@ body {
 h1 {
 	font-family: "Fascinate", cursive;
 	margin-bottom: 2vh;
-	font-size: 3.25rem;
+	font-size: 3rem;
 	color: #fef6eb;
 }
 
@@ -62,7 +62,16 @@ h1 {
 #column-top td {
 	border: dashed 1px lightgray;
 }
+#column-top td .piece {
+	visibility: hidden;
+}
 
-#column-top td:hover {
-	background-color: gold;
+#column-top td:hover .player-1 {
+	visibility: visible;
+	background-color: #96c0ce;
+}
+
+#column-top td:hover .player-2 {
+	visibility: visible;
+	background-color: #c25b56;
 }

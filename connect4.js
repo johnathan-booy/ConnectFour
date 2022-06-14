@@ -39,8 +39,14 @@ function makeHtmlBoard() {
 	top.addEventListener("click", handleClick);
 
 	for (let x = 0; x < WIDTH; x++) {
-		let headCell = document.createElement("td");
+		const headCell = document.createElement("td");
 		headCell.setAttribute("id", x);
+
+		const headPiece = document.createElement("div");
+		headPiece.classList.add("piece");
+		headPiece.classList.add(`player-${currPlayer}`);
+
+		headCell.append(headPiece);
 		top.append(headCell);
 	}
 	htmlBoard.append(top);
@@ -99,7 +105,12 @@ function endGame(msg) {
 
 function handleClick(evt) {
 	// get x from ID of clicked cell
-	let x = +evt.target.id;
+	let x;
+	if (evt.target.classList.contains("piece")) {
+		x = evt.target.parentElement.id;
+	} else {
+		x = evt.target.id;
+	}
 
 	// get next spot in column (if none, ignore click)
 	let y = findSpotForCol(x);
@@ -119,9 +130,21 @@ function handleClick(evt) {
 		return endGame(`It's a tie! Would you like to play again?`);
 	}
 
+	// remove player class from top row divs
+	const allHeadPieces = document.querySelectorAll("#column-top .piece");
+	console.log(allHeadPieces);
+	for (const piece of allHeadPieces) {
+		piece.classList.remove(`player-${currPlayer}`);
+	}
+
 	// switch players
 	currPlayer++;
 	if (currPlayer > 2) currPlayer = 1;
+
+	// reassign player class to top row divs
+	for (const piece of allHeadPieces) {
+		piece.classList.add(`player-${currPlayer}`);
+	}
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -144,28 +167,28 @@ function checkForWin() {
 	for (let y = 0; y < HEIGHT; y++) {
 		for (let x = 0; x < WIDTH; x++) {
 			// Gather the four horizontal coordinates
-			let horiz = [
+			const horiz = [
 				[y, x],
 				[y, x + 1],
 				[y, x + 2],
 				[y, x + 3],
 			];
 			// Gather the four vertical coordinates
-			let vert = [
+			const vert = [
 				[y, x],
 				[y + 1, x],
 				[y + 2, x],
 				[y + 3, x],
 			];
 			// Gather the four diagonal coordinates, slanting right
-			var diagDR = [
+			const diagDR = [
 				[y, x],
 				[y + 1, x + 1],
 				[y + 2, x + 2],
 				[y + 3, x + 3],
 			];
 			// Gather the four diagonal coordinates, slanting left
-			var diagDL = [
+			const diagDL = [
 				[y, x],
 				[y + 1, x - 1],
 				[y + 2, x - 2],
