@@ -1,3 +1,8 @@
+body {
+	background-color: #050000;
+	background-image: url("https://www.transparenttextures.com/patterns/broken-noise.png");
+	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
 /* game board table */
 
 #board td {
@@ -9,7 +14,6 @@
 /* pieces are div within game table cells: draw as colored circles */
 
 .piece {
-	/* TODO: make into circles */
 	margin: 5px;
 	width: 80%;
 	height: 80%;
