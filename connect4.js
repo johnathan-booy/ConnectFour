@@ -11,7 +11,7 @@ class Game {
     this.height = height;
     this.currPlayer = 1; // active player: 1 or 2
     this.board = []; // array of rows, each row is array of cells  (board[y][x])
-
+    this.gameOver = false;
     this.makeStartButton();
   }
 
@@ -187,10 +187,12 @@ board = array of rows, each row is array of cells  (board[y][x]) */
     }
   }
 
+  /** handleClick: handle click of column top to play piece */
   handleClick(evt) {
-    /** handleClick: handle click of column top to play piece */
+    // Don't let player add pieces after gameOver
+    if (this.gameOver) return;
+
     // get x from ID of clicked cell
-    // CHECK => Does this work without reference to x in the if and else statements?
     let x = evt.target.classList.contains("piece") ? evt.target.parentElement.id : evt.target.id;
 
     // get next spot in column (if none, ignore click)
@@ -202,7 +204,10 @@ board = array of rows, each row is array of cells  (board[y][x]) */
     this.board[y][x] = this.currPlayer;
     this.placeInTable(y, x);
 
-    if (this.checkForWin()) return this.endGame(`Player ${this.currPlayer} won! Would you like to play again?`);
+    if (this.checkForWin()) {
+      this.gameOver = true;
+      return this.endGame(`Player ${this.currPlayer} won! Would you like to play again?`);
+    }
 
     // CHECK => Does this work?
     if (this.checkForTie()) return this.endGame(`It's a tie! Would you like to play again?`);
@@ -225,6 +230,7 @@ board = array of rows, each row is array of cells  (board[y][x]) */
 
   startGame(event) {
     const startButton = document.getElementById("start-button");
+    this.gameOver = false;
     this.deleteHtmlBoard();
     this.makeBoard();
     this.makeHtmlBoard();
